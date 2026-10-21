@@ -20,7 +20,7 @@ Une application IA full-stack open source : front React, API d'inférence FastAP
 
 <br/>
 
-<img src="docs/screenshot.png" alt="Interface MORA : saisie du texte, génération et lecteur audio" width="800" />
+<img src="docs/scs1.png" alt="Interface MORA : saisie du texte, génération et lecteur audio" width="800" />
 
 </div>
 
@@ -166,7 +166,7 @@ Le front et l'API partagent **un contrat unique** : `POST /tts`. Pointer le fron
 
 <div align="center">
 
-<img src="docs/architecture.png" alt="Schéma d'architecture MORA" width="720" />
+
 
 </div>
 

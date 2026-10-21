@@ -20,7 +20,7 @@ An open-source, full-stack AI application: React front end, FastAPI inference AP
 
 <br/>
 
-<img src="docs/screenshot.png" alt="MORA interface: text input, generation state, and audio player" width="800" />
+<img src="docs/scs1.png" alt="MORA interface: text input, generation state, and audio player" width="800" />
 
 </div>
 
@@ -166,7 +166,7 @@ The front end and the API share a **single contract**: `POST /tts`. Point the fr
 
 <div align="center">
 
-<img src="docs/architecture.png" alt="MORA architecture diagram" width="720" />
+
 
 </div>
 
