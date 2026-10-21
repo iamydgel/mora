@@ -21,3 +21,7 @@ __pycache__/
 coverage/
 .cache/
 *.log
+
+# Exports d'outil superseded — remplacés par frontend/src/styles/ et frontend/src/assets/logo/
+gemini-code-*.css
+gemini-svg*.svg
