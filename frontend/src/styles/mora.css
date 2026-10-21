@@ -1,0 +1,302 @@
+/**
+ * MORA — PRIMITIVES UI & MOTEUR DE L'AGENT VOCAL
+ * Brand System v2.0 FINAL · Territoire 2 — « La Métrique Temporelle »
+ *
+ * Corrections du 2026-10-21 (audit de conformité) :
+ *   1. Bouton Accent : texte #FFFFFF (3,45:1, non AA) → var(--mora-color-on-accent) (Encre).
+ *   2. Hover accent : #C25B1D était une zone morte → --mora-color-brand-accent-hover (#E07A2F).
+ *   3. Mora Meter : les blocs n'avaient ni width ni flex-basis (largeur nulle) → largeur
+ *      dérivée de la durée de la mora (1 px = 1,5 ms).
+ *   4. État SPEAKING : absent (4 états sur 5) → ajouté.
+ *   5. LISTENING : scaleX appliqué à une jambe verticale → scaleY avec transform-origin top.
+ *   6. ERROR : 2,25 oscillations au lieu des 3 cycles prescrits → recalé, et teinte appliquée
+ *      au logomark (et non plus seulement au texte).
+ *   7. Reduced motion : l'indicateur GENERATING disparaissait (animation: none + left:-100%)
+ *      → remplacé par un fondu simple de 100 ms, comme l'exige le brand system.
+ *   8. Tous les easings repassent sur la courbe unique --mora-ease-default.
+ *   9. Le logomark devient thémable : .mora-gate-body suit currentColor, donc l'état ERROR
+ *      le teinte et le mode clair l'assombrit.
+ */
+
+/* ==================================================================
+   LOGOMARK — le SVG porte class="mora-gate" et contient
+   .mora-gate-body (chemin) et .mora-gate-leg (jambe d'émission).
+   ================================================================== */
+
+.mora-gate {
+  display: block;
+  width: 24px;
+  height: 24px;
+}
+
+.mora-gate-body {
+  fill: currentColor;
+}
+
+.mora-gate-leg {
+  fill: var(--mora-color-brand-accent);
+  transform-origin: 50% 0%;
+  transition: transform var(--mora-duration-normal) var(--mora-ease-default);
+}
+
+/* ==================================================================
+   TYPOGRAPHIE
+   ================================================================== */
+
+.mora-display-hero {
+  font-family: var(--mora-font-serif);
+  font-size: var(--mora-text-display-size);
+  line-height: var(--mora-text-display-lh);
+  letter-spacing: var(--mora-text-display-ls);
+  font-weight: 400;
+}
+
+.mora-title {
+  font-family: var(--mora-font-sans);
+  font-size: var(--mora-text-h1-size);
+  line-height: var(--mora-text-h1-lh);
+  letter-spacing: var(--mora-text-h1-ls);
+  font-weight: 600;
+}
+
+/* ==================================================================
+   BOUTONS
+   ================================================================== */
+
+.mora-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--mora-space-xs);
+  height: 40px;
+  padding: 0 var(--mora-space-md);
+  font-family: var(--mora-font-sans);
+  font-size: var(--mora-text-body-base-size);
+  font-weight: 500;
+  border: none;
+  border-radius: var(--mora-radius-control);
+  cursor: pointer;
+  transition: background-color var(--mora-duration-fast) var(--mora-ease-default),
+    opacity var(--mora-duration-fast) var(--mora-ease-default);
+}
+
+/* Primaire (Studio) — Blanc Obsidienne / Noir Encre.
+   L'indirection par tokens l'inverse proprement en mode clair (bouton sombre sur page
+   claire). On s'écarte ici du PDF, qui impose la même parure dans les deux thèmes :
+   un bouton blanc sur une page blanche n'a aucune affordance. PDF à corriger en v2.1. */
+.mora-btn-primary {
+  background-color: var(--mora-color-text-primary);
+  color: var(--mora-color-bg-base);
+}
+
+.mora-btn-primary:hover {
+  opacity: 0.9;
+}
+
+/* Accent (Action Vocale) — Ambre Souffle / Encre. Jamais du blanc : 3,45:1 ne passe pas AA. */
+.mora-btn-accent {
+  background-color: var(--mora-color-brand-accent);
+  color: var(--mora-color-on-accent);
+}
+
+.mora-btn-accent:hover {
+  background-color: var(--mora-color-brand-accent-hover);
+}
+
+.mora-btn-accent:focus-visible {
+  outline: 2px solid var(--mora-color-brand-accent);
+  outline-offset: 2px;
+}
+
+/* ==================================================================
+   MORA METER — visualisation de l'intensité d'articulation
+   1 px = 1,5 ms. La durée de chaque mora est posée en variable inline :
+   <span class="mora-meter-block" style="--mora-mora-duration: 180"></span>
+   ================================================================== */
+
+.mora-meter {
+  display: flex;
+  align-items: center;
+  gap: var(--mora-space-xs);
+  height: var(--mora-meter-height);
+  padding: 0 var(--mora-space-sm);
+  background: var(--mora-color-bg-surface-1);
+  border: 1px solid var(--mora-color-border-subtle);
+  border-radius: var(--mora-radius-control);
+  overflow-x: auto;   /* une phrase de 30 s = 20 000 px : le meter défile */
+  overflow-y: hidden;
+  scrollbar-width: none;
+}
+
+.mora-meter::-webkit-scrollbar {
+  display: none;
+}
+
+.mora-meter-block {
+  flex: 0 0 auto;
+  width: calc(var(--mora-mora-duration, 150) * var(--mora-meter-px-per-ms) * 1px);
+  height: var(--mora-meter-block-height);
+  border-radius: var(--mora-radius-sm);
+  background-color: var(--mora-color-bg-surface-2);
+  transition: background-color var(--mora-duration-fast) var(--mora-ease-default),
+    width var(--mora-duration-normal) var(--mora-ease-default);
+}
+
+.mora-meter-block[data-state='active'] {
+  background-color: var(--mora-color-brand-accent);
+}
+
+/* ==================================================================
+   BLOC DE CODE (documentation API)
+   ================================================================== */
+
+.mora-code-block {
+  background-color: var(--mora-color-bg-surface-1);
+  border: 1px solid var(--mora-color-border-subtle);
+  border-radius: var(--mora-radius-container);
+  padding: var(--mora-space-md);
+  font-family: var(--mora-font-mono);
+  font-size: var(--mora-text-code-size);
+  line-height: var(--mora-text-code-lh);
+  color: var(--mora-color-text-primary);
+  overflow-x: auto;
+}
+
+.mora-code-block .syn-key {
+  color: var(--mora-color-brand-accent);
+}
+
+.mora-code-block .syn-val {
+  color: var(--mora-color-text-secondary);
+}
+
+/* ==================================================================
+   MOTEUR DE L'AGENT VOCAL — 5 états
+   ================================================================== */
+
+.mora-agent {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--mora-space-sm);
+  color: var(--mora-color-text-primary);
+  transition: color var(--mora-duration-fast) var(--mora-ease-default);
+}
+
+/* 1. IDLE — respiration lente, opacité 40 % → 70 % */
+.mora-agent[data-state='idle'] {
+  animation: mora-pulse-idle 3200ms var(--mora-ease-default) infinite alternate;
+}
+
+@keyframes mora-pulse-idle {
+  0% { opacity: 0.4; }
+  100% { opacity: 0.7; }
+}
+
+/* 2. LISTENING — rétraction 200 ms de la jambe d'émission + résonance du corps.
+    L'impulsion d'arche dédiée exigerait de scinder le chemin du logomark en trois
+    formes (arche / pilier / diagonale) ; non fait ici, le risque de coutures
+    d'anticrénelage sur un logo « FINAL » n'en vaut pas le risque. À arbitrer. */
+.mora-agent[data-state='listening'] .mora-gate-leg {
+  transform: scaleY(0.85);
+}
+
+.mora-agent[data-state='listening'] .mora-gate-body {
+  animation: mora-resonance 200ms var(--mora-ease-default);
+}
+
+@keyframes mora-resonance {
+  0% { opacity: 0.82; }
+  100% { opacity: 1; }
+}
+
+/* 3. GENERATING — balayage lumineux Ambre */
+.mora-agent[data-state='generating'] {
+  overflow: hidden;
+}
+
+.mora-agent[data-state='generating']::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent 0%, var(--mora-color-brand-accent) 50%, transparent 100%);
+  animation: mora-sweep-generating 1200ms var(--mora-ease-default) infinite;
+}
+
+@keyframes mora-sweep-generating {
+  0% { left: -100%; }
+  100% { left: 200%; }
+}
+
+/* 4. SPEAKING — extension des segments proportionnelle à la durée réelle de chaque mora,
+    illumination instantanée en Ambre Souffle */
+.mora-agent[data-state='speaking'] .mora-meter-block {
+  background-color: var(--mora-color-brand-accent);
+}
+
+/* 5. ERROR — teinte Grenat en 120 ms, puis micro-vibration de 2 px sur 3 cycles (240 ms) */
+.mora-agent[data-state='error'] {
+  color: var(--mora-color-error);
+}
+
+.mora-agent[data-state='error'] .mora-gate-leg {
+  fill: var(--mora-color-error);
+}
+
+.mora-agent[data-state='error'] .mora-gate {
+  animation: mora-shake-error 240ms cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+@keyframes mora-shake-error {
+  0%      { transform: translateX(0); }
+  8.33%   { transform: translateX(-2px); }
+  16.67%  { transform: translateX(0); }
+  25%     { transform: translateX(2px); }
+  33.33%  { transform: translateX(0); }
+  41.67%  { transform: translateX(-2px); }
+  50%     { transform: translateX(0); }
+  58.33%  { transform: translateX(2px); }
+  66.67%  { transform: translateX(0); }
+  75%     { transform: translateX(-2px); }
+  83.33%  { transform: translateX(0); }
+  91.67%  { transform: translateX(2px); }
+  100%    { transform: translateX(0); }
+}
+
+/* ==================================================================
+   ACCESSIBILITÉ — prefers-reduced-motion
+   Toute animation spatiale ou balayée devient un fondu simple de 100 ms.
+   ================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 100ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 100ms !important;
+  }
+
+  .mora-agent[data-state='error'] .mora-gate {
+    animation: none !important;
+    opacity: 1;
+  }
+
+  /* Le balayage disparaît, mais l'indicateur de génération doit RESTER visible :
+     il devient un voile ambré statique qui apparaît en fondu. */
+  .mora-agent[data-state='generating']::after {
+    animation: none !important;
+    left: 0;
+    width: 100%;
+    opacity: 0;
+    transition: opacity 100ms var(--mora-ease-default);
+    background: var(--mora-color-brand-accent);
+  }
+
+  .mora-agent[data-state='generating'] {
+    --mora-generating-veil: 1;
+  }
+}

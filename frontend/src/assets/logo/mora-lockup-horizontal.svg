@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-1 -1 148 26" width="148" height="26" fill="none" role="img" aria-label="MORA">
+  <!-- Mora Gate — Lockup Horizontal Principal.
+       Espacement 1,0X : la marque occupe X 0→24, le wordmark commence à X 48 (écart 24 u = 1,0X).
+       Le viewBox est recadré sur le contenu réel (0→146) et_SYMMÉTRIQUE_: le fichier
+       d'origine laissait 14 u de vide à droite et 0 à gauche, ce qui le déscentrait. -->
+  <g transform="translate(0, 0)">
+    <path class="mora-gate-body" fill-rule="evenodd" d="M0 0H20V3H16V9.5L10.2 18H6.5L4 14.3V24H0V0ZM4 3V9.7L8.4 16H9.8L16 6.85V3H4Z" fill="#F9F9FB" />
+    <rect class="mora-gate-leg" x="20" y="0" width="4" height="16" fill="#D96B27" />
+  </g>
+
+  <!-- Wordmark MORA — tracé sur mesure (24 u de haut), non dérivé de Geist. -->
+  <g transform="translate(48, 0)" fill="#F9F9FB">
+    <path d="M0 0H4V18L11 3H13L20 18V0H24V24H19.5L12 7.5L4.5 24H0V0Z" />
+    <path fill-rule="evenodd" d="M30 0C26 0 24 3 24 7V17C24 21 26 24 30 24H40C44 24 46 21 46 17V7C46 3 44 0 40 0H30ZM28 7C28 4.5 29 4 30 4H40C41 4 42 4.5 42 7V17C42 19.5 41 20 40 20H30C29 20 28 19.5 28 17V7Z" />
+    <path d="M52 0H66C70 0 72 2 72 6V10C72 13.5 70 15 67 15.5L73 24H68L62.5 16H56V24H52V0ZM56 4V12H65C67 12 68 11.5 68 9.5V6.5C68 4.5 67 4 65 4H56Z" />
+    <path d="M84 0H89L98 24H93.5L91.5 18H81.5L79.5 24H75L84 0ZM83 14H90L86.5 4L83 14Z" />
+  </g>
+</svg>

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" fill="none" role="img" aria-label="MORA">
+  <!-- Mora Gate — App Icon 512×512 (master).
+       Plein bord Encre, marque centrée à 320 u (62,5 % du canvas) avec 96 u de marge
+       symétrique sur les quatre côtés. Le système d'exploitation applique son propre
+       masque : ce fichier reste un carré plein. -->
+  <rect width="512" height="512" fill="#0B0C0E" />
+  <g transform="translate(96, 96) scale(13.3333)">
+    <path class="mora-gate-body" fill-rule="evenodd" d="M0 0H20V3H16V9.5L10.2 18H6.5L4 14.3V24H0V0ZM4 3V9.7L8.4 16H9.8L16 6.85V3H4Z" fill="#F9F9FB" />
+    <rect class="mora-gate-leg" x="20" y="0" width="4" height="16" fill="#D96B27" />
+  </g>
+</svg>

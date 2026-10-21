@@ -1,0 +1,172 @@
+/**
+ * MORA — DESIGN TOKENS
+ * Brand System v2.0 FINAL · Territoire 2 — « La Métrique Temporelle »
+ *
+ * RÈGLE : ce fichier ne contient QUE des custom properties.
+ * Aucune règle de style ici. Voir :
+ *   - fonts.css  → chargement des fontes
+ *   - base.css   → reset + styles de base (body, liens, focus)
+ *   - mora.css   → primitives UI + moteur de motion
+ *
+ * Corrections du 2026-10-21 (audit WCAG + audit géométrique) :
+ *   1. --mora-color-on-accent ajouté — le texte blanc sur ambre tombait à 3,45:1 (non AA).
+ *   2. --mora-color-brand-accent-hover assombri/éclairci vers #E07A2F — #C25B1D était une
+ *      « zone morte » : ni le blanc (4,37:1) ni l'encre (4,48:1) n'atteignaient 4,5:1.
+ *   3. Les 6 teintes hors PDF v2.0 sont isolées en section 6 et signalées comme extension.
+ *   4. --mora-ease-hero retiré : le PDF impose une courbe unique.
+ *   5. Le bloc @import Google Fonts déplacé dans fonts.css (il bloquait le rendu).
+ */
+
+:root {
+  /* ==================================================================
+     1. TYPOGRAPHIE — Trinité : Instrument Serif / Geist / Geist Mono
+     ================================================================== */
+
+  --mora-font-sans: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --mora-font-serif: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+  --mora-font-mono: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --mora-text-display-size: 72px;
+  --mora-text-display-lh: 1.05;
+  --mora-text-display-ls: -0.03em;
+
+  --mora-text-h1-size: 40px;
+  --mora-text-h1-lh: 1.15;
+  --mora-text-h1-ls: -0.02em;
+
+  --mora-text-h2-size: 28px;
+  --mora-text-h2-lh: 1.20;
+  --mora-text-h2-ls: -0.01em;
+
+  --mora-text-h3-size: 20px;
+  --mora-text-h3-lh: 1.30;
+  --mora-text-h3-ls: 0em;
+
+  --mora-text-body-lg-size: 18px;
+  --mora-text-body-lg-lh: 1.50;
+
+  --mora-text-body-base-size: 15px;
+  --mora-text-body-base-lh: 1.50;
+
+  --mora-text-caption-size: 13px;
+  --mora-text-caption-lh: 1.40;
+  --mora-text-caption-ls: +0.01em;
+
+  --mora-text-code-size: 13px;
+  --mora-text-code-lh: 1.45;
+
+  /* ==================================================================
+     2. COULEUR — palette PDF v2.0 (8 teintes nommées)
+     Les dégradés polychromes sont interdits par le brand system.
+     ================================================================== */
+
+  /* Accent unique — Ambre Souffle */
+  --mora-color-brand-accent: #D96B27;
+  --mora-color-brand-accent-hover: #E07A2F;  /* plus clair : 6,52:1 avec l'encre */
+  --mora-color-brand-accent-rgb: 217, 107, 39;
+  --mora-color-brand-accent-hover-rgb: 224, 122, 47;
+
+  /* Texte posé SUR l'accent — l'encre, jamais le blanc (3,45:1 → non AA) */
+  --mora-color-on-accent: #0B0C0E;
+
+  /* ==================================================================
+     3. ESPACEMENT — pas de 8 px
+     ================================================================== */
+
+  --mora-space-xs: 4px;
+  --mora-space-sm: 8px;    /* base */
+  --mora-space-md: 16px;
+  --mora-space-lg: 24px;
+
+  /* ==================================================================
+     4. RAYONS — Control / Container / Overlay / Pill
+     ================================================================== */
+
+  --mora-radius-control: 6px;
+  --mora-radius-container: 10px;
+  --mora-radius-overlay: 16px;
+  --mora-radius-pill: 9999px;
+
+  /* ==================================================================
+     5. MOTION — 3 durées, une seule courbe
+     ================================================================== */
+
+  --mora-duration-fast: 120ms;
+  --mora-duration-normal: 200ms;
+  --mora-duration-slow: 320ms;
+  --mora-ease-default: cubic-bezier(0.16, 1, 0.3, 1);
+
+}
+
+/* ====================================================================
+   6. THÈMES — Encre par défaut, Albâtre en clair
+   L'attribut data-theme doit être posé sur <html>.
+   ==================================================================== */
+
+[data-theme='dark'],
+:root:not([data-theme='light']) {
+  --mora-color-bg-base: #0B0C0E;        /* Encre */
+  --mora-color-bg-surface-1: #131518;  /* Basalte */
+  --mora-color-bg-surface-2: #1C1F24;  /* Ardoise */
+  --mora-color-text-primary: #F9F9FB;   /* Blanc Obsidienne */
+  --mora-color-text-secondary: #8A909A; /* Brume */
+  --mora-color-text-inverse: #0B0C0E;
+  --mora-color-border-subtle: rgba(255, 255, 255, 0.08);
+
+  --mora-elevation-1: 0px 1px 2px rgba(0, 0, 0, 0.4), inset 0px 1px 0px rgba(255, 255, 255, 0.05);
+  --mora-elevation-2: 0px 8px 16px rgba(0, 0, 0, 0.6), inset 0px 1px 0px rgba(255, 255, 255, 0.08);
+  --mora-elevation-3: 0px 24px 48px rgba(0, 0, 0, 0.8), 0px 0px 0px 1px rgba(255, 255, 255, 0.1);
+}
+
+[data-theme='light'] {
+  --mora-color-bg-base: #F8F9FA;        /* Albâtre */
+  --mora-color-bg-surface-1: #FFFFFF;  /* Craie */
+  --mora-color-bg-surface-2: #F1F3F5;  /* Galet */
+  --mora-color-text-primary: #0B0C0E;   /* Encre */
+  --mora-color-text-secondary: #525866; /* Graphite */
+  --mora-color-text-inverse: #F8F9FA;
+  --mora-color-border-subtle: rgba(11, 12, 14, 0.08);
+
+  --mora-elevation-1: 0px 1px 2px rgba(0, 0, 0, 0.05), inset 0px 1px 0px rgba(255, 255, 255, 0.8);
+  --mora-elevation-2: 0px 8px 16px rgba(0, 0, 0, 0.08), inset 0px 1px 0px rgba(255, 255, 255, 1);
+  --mora-elevation-3: 0px 24px 48px rgba(0, 0, 0, 0.12), 0px 0px 0px 1px rgba(11, 12, 14, 0.08);
+}
+
+:root {
+  /* ==================================================================
+     7. SEMANTIQUES — extension proposée, hors PDF v2.0
+     ------------------------------------------------------------------
+     Ces 3 teintes n'existent PAS dans le brand system v2.0, qui ne
+     décrit que 8 teintes et UNE couleur d'action. Elles sont ajoutées
+     ici parce que l'interface en a besoin (états de formulaire), mais
+     elles doivent être validées dans un PDF v2.1 avant d'être
+     considérées comme canoniques.
+     Contrastes mesurés sur Encre : Jade 8,59:1 AAA · Topaze 10,20:1 AAA ·
+     Cobalt 5,32:1 AA.
+     ================================================================== */
+
+  --mora-color-success: #22C55E; /* Jade */
+  --mora-color-warning: #EAB308; /* Topaze */
+  --mora-color-info: #3B82F6;    /* Cobalt */
+  --mora-color-error: #EF4444;   /* Grenat */
+  --mora-color-on-status: #0B0C0E;
+
+  /* ==================================================================
+     8. ÉCHELLES COMPLÉMENTAIRES — extensions, hors PDF v2.0
+     Utilisées pour les layouts longs ; à valider en v2.1.
+     ================================================================== */
+
+  --mora-space-xl: 32px;
+  --mora-space-2xl: 64px;
+  --mora-radius-sm: 4px;
+  --mora-duration-hero: 480ms;
+
+  /* ==================================================================
+     9. MORA METER — 1 px = 1,5 ms
+     Une mora de N ms occupe donc N × 0,6667 px.
+     ================================================================== */
+
+  --mora-meter-px-per-ms: 0.6667;
+  --mora-meter-block-height: 12px;
+  --mora-meter-height: 24px;
+}

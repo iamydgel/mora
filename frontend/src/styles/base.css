@@ -1,0 +1,52 @@
+/**
+ * MORA — STYLES DE BASE
+ * Reset minimal + styles du document. Séparé de tokens.css pour que le
+ * fichier de tokens reste purement déclaratif.
+ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--mora-color-bg-base);
+  color: var(--mora-color-text-primary);
+  font-family: var(--mora-font-sans);
+  font-size: var(--mora-text-body-base-size);
+  line-height: var(--mora-text-body-base-lh);
+  font-feature-settings: 'tnum' 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+p,
+figure {
+  margin: 0;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  font: inherit;
+}
+
+/* Focus visible — non supprimé, jamais. */
+:focus-visible {
+  outline: 2px solid var(--mora-color-brand-accent);
+  outline-offset: 2px;
+}

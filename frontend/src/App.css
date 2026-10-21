@@ -1,0 +1,281 @@
+#root {
+  min-height: 100vh;
+}
+
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 var(--mora-space-xl);
+}
+
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 88px;
+  border-bottom: 1px solid var(--mora-color-border-subtle);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--mora-space-sm);
+  color: var(--mora-color-text-primary);
+  text-decoration: none;
+}
+
+.brand-mark {
+  width: 28px;
+  height: 28px;
+}
+
+.brand-name {
+  font-size: var(--mora-text-h3-size);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+
+.header-description,
+.site-footer {
+  color: var(--mora-color-text-secondary);
+  font-size: var(--mora-text-caption-size);
+}
+
+.main-content {
+  display: grid;
+  flex: 1;
+  align-content: start;
+  justify-items: center;
+  padding: var(--mora-space-2xl) 0;
+}
+
+.studio {
+  width: min(100%, 720px);
+}
+
+.studio-heading {
+  margin-bottom: var(--mora-space-xl);
+}
+
+.studio-heading h1 {
+  margin-bottom: var(--mora-space-sm);
+}
+
+.studio-heading > p {
+  color: var(--mora-color-text-secondary);
+  font-size: var(--mora-text-body-lg-size);
+}
+
+.generator-form {
+  padding: var(--mora-space-lg);
+  background: var(--mora-color-bg-surface-1);
+  border: 1px solid var(--mora-color-border-subtle);
+  border-radius: var(--mora-radius-container);
+}
+
+.field-heading,
+.form-footer,
+.result-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--mora-space-md);
+}
+
+.field-heading {
+  margin-bottom: var(--mora-space-sm);
+  font-weight: 600;
+}
+
+.character-count,
+.voice-note,
+.result-heading p {
+  color: var(--mora-color-text-secondary);
+  font-size: var(--mora-text-caption-size);
+}
+
+.character-count {
+  font-variant-numeric: tabular-nums;
+}
+
+.character-count.is-over-limit {
+  color: var(--mora-color-error);
+}
+
+.generator-form textarea {
+  display: block;
+  width: 100%;
+  min-height: 216px;
+  max-height: 360px;
+  overflow-y: hidden;
+  resize: vertical;
+  padding: var(--mora-space-md);
+  border: 1px solid var(--mora-color-border-subtle);
+  border-radius: var(--mora-radius-control);
+  background: var(--mora-color-bg-base);
+  color: var(--mora-color-text-primary);
+  font: inherit;
+  line-height: var(--mora-text-body-base-lh);
+}
+
+.generator-form textarea::placeholder {
+  color: var(--mora-color-text-secondary);
+  opacity: 1;
+}
+
+.generator-form textarea:focus-visible {
+  outline: 2px solid var(--mora-color-brand-accent);
+  outline-offset: 2px;
+}
+
+.form-footer {
+  margin-top: var(--mora-space-md);
+}
+
+.generate-button {
+  min-height: 44px;
+}
+
+.mora-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.48;
+}
+
+.generate-button {
+  min-width: 156px;
+}
+
+.loading-spinner {
+  width: 15px;
+  height: 15px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: mora-button-spin 700ms linear infinite;
+}
+
+@keyframes mora-button-spin {
+  to { transform: rotate(360deg); }
+}
+
+.status-line {
+  min-height: 48px;
+  margin-top: var(--mora-space-lg);
+  padding: var(--mora-space-sm) var(--mora-space-md);
+  background: var(--mora-color-bg-surface-1);
+  border: 1px solid var(--mora-color-border-subtle);
+  border-radius: var(--mora-radius-control);
+  font-size: var(--mora-text-caption-size);
+}
+
+.status-mark {
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+}
+
+.error-message {
+  margin-top: var(--mora-space-sm);
+  color: var(--mora-color-error);
+  font-size: var(--mora-text-caption-size);
+}
+
+.audio-result {
+  display: grid;
+  gap: var(--mora-space-md);
+  margin-top: var(--mora-space-xl);
+  padding: var(--mora-space-lg);
+  background: var(--mora-color-bg-surface-1);
+  border: 1px solid var(--mora-color-border-subtle);
+  border-radius: var(--mora-radius-container);
+}
+
+.result-heading {
+  margin-bottom: var(--mora-space-md);
+}
+
+.result-heading h2 {
+  margin-bottom: var(--mora-space-xs);
+  font-size: var(--mora-text-h3-size);
+  line-height: var(--mora-text-h3-lh);
+}
+
+.download-button {
+  flex: 0 0 auto;
+  text-decoration: none;
+}
+
+.audio-result audio {
+  display: block;
+  width: 100%;
+  color-scheme: light;
+}
+
+.site-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--mora-space-md);
+  padding: var(--mora-space-md) 0;
+  border-top: 1px solid var(--mora-color-border-subtle);
+}
+
+@media (max-width: 600px) {
+  .app-shell {
+    padding: 0 var(--mora-space-md);
+  }
+
+  .site-header {
+    min-height: 72px;
+  }
+
+  .main-content {
+    padding-top: var(--mora-space-2xl);
+  }
+
+  .studio-heading h1 {
+    font-size: var(--mora-text-h2-size);
+  }
+
+  .generator-form {
+    padding: var(--mora-space-md);
+  }
+
+  .form-footer {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .generate-button {
+    width: 100%;
+    min-width: 132px;
+  }
+
+  .voice-note {
+    max-width: none;
+  }
+
+  .audio-result {
+    padding: var(--mora-space-md);
+  }
+
+  .result-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .download-button {
+    width: 100%;
+    min-height: 44px;
+    padding: 0 var(--mora-space-sm);
+    font-size: var(--mora-text-caption-size);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loading-spinner {
+    animation: none;
+  }
+}

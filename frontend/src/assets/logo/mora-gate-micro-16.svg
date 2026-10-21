@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" fill="none" role="img" aria-label="MORA">
+  <!-- Mora Gate — Micro 16 px. Tracé re-optimisé pour la petite taille (pas une réduction
+       du Master : la diagonale passe de ~56° à ~56-57° avec une arête à 71,3°).
+       La jambe d'émission bicolore est restituée : le PDF liste le Micro dans le
+       tableau bicolore. -->
+  <path class="mora-gate-body" fill-rule="evenodd" d="M0 0H13V2H10V6.5L6.5 12H4.5L3 9.7V16H0V0ZM3 2V6.3L6.2 11H7.8L10 4.5V2H3Z" fill="#F9F9FB" />
+  <rect class="mora-gate-leg" x="13" y="0" width="3" height="11" fill="#D96B27" />
+</svg>

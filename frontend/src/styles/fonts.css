@@ -1,0 +1,35 @@
+/**
+ * MORA — CHARGEMENT DES FONTES
+ *
+ * ⚠️  CETTE REQUÊTE ENVOIE L'IP DES VISITEURS À GOOGLE.
+ *     Pour un produit français, auto-héberger avant la production :
+ *
+ *       npm i @fontsource/geist-sans @fontsource/geist-mono @fontsource/instrument-serif
+ *
+ *     puis, dans le point d'entrée de l'app :
+ *
+ *       import '@fontsource/geist-sans/400.css';
+ *       import '@fontsource/geist-sans/500.css';
+ *       import '@fontsource/geist-sans/600.css';
+ *       import '@fontsource/geist-sans/700.css';
+ *       import '@fontsource/geist-mono/400.css';
+ *       import '@fontsource/geist-mono/500.css';
+ *       import '@fontsource/geist-mono/600.css';
+ *       import '@fontsource/instrument-serif/400.css';
+ *       import '@fontsource/instrument-serif/400-italic.css';
+ *
+ *     et supprimer ce fichier.
+ *
+ * Si l'auto-hébergement n'est pas possible, préférer la balise <link> dans index.html
+ * (préconnect) à l'@import CSS, qui est sérialisé APRÈS le téléchargement de la feuille
+ * de style et retarde donc le premier rendu :
+ *
+ *     <link rel="preconnect" href="https://fonts.googleapis.com" />
+ *     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+ *     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Geist:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" />
+ *
+ * Les trois familles (Geist, Geist Mono, Instrument Serif) sont bien servies par
+ * Google Fonts — URL vérifiée le 2026-10-21.
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Geist:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap');

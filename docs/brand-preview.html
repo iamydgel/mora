@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MORA — Brand System v2.0 · Aperçu</title>
+
+<link rel="stylesheet" href="../frontend/src/styles/fonts.css" />
+<link rel="stylesheet" href="../frontend/src/styles/tokens.css" />
+<link rel="stylesheet" href="../frontend/src/styles/base.css" />
+<link rel="stylesheet" href="../frontend/src/styles/mora.css" />
+
+<style>
+  /* Styles de la page de démonstration uniquement — hors du design system. */
+  .page { max-width: 1120px; margin: 0 auto; padding: 48px 32px 96px; }
+  .page-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; margin-bottom: 8px; }
+  .eyebrow { font-family: var(--mora-font-mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--mora-color-text-secondary); }
+  h1 { font-family: var(--mora-font-serif); font-size: 56px; line-height: 1.05; letter-spacing: -.03em; font-weight: 400; margin: 8px 0 4px; }
+  .lede { color: var(--mora-color-text-secondary); max-width: 56ch; font-size: 15px; }
+  section { margin-top: 64px; }
+  h2 { font-size: 13px; font-family: var(--mora-font-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--mora-color-text-secondary); border-top: 1px solid var(--mora-color-border-subtle); padding-top: 16px; margin: 0 0 24px; font-weight: 500; }
+  .grid { display: grid; gap: 16px; }
+  .grid > * { min-width: 0; }
+  .g2 { grid-template-columns: repeat(2, 1fr); }
+  .g3 { grid-template-columns: repeat(3, 1fr); }
+  .g5 { grid-template-columns: repeat(5, 1fr); }
+  .card { background: var(--mora-color-bg-surface-1); border: 1px solid var(--mora-color-border-subtle); border-radius: var(--mora-radius-container); padding: var(--mora-space-lg); overflow: hidden; }
+  .card.dark { background: #0B0C0E; }
+  .card.light { background: #F8F9FA; }
+  .card.dark .label, .card.light .label { color: #8A909A; }
+  .card.dark .swatch-hex, .card.light .swatch-hex { color: #8A909A; }
+  .label { font-family: var(--mora-font-mono); font-size: 11px; letter-spacing: .06em; color: var(--mora-color-text-secondary); text-transform: uppercase; margin-top: 14px; }
+  .center { display: flex; align-items: center; justify-content: center; min-height: 120px; }
+  .stack { display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
+  .swatch { border-radius: var(--mora-radius-control); height: 56px; border: 1px solid var(--mora-color-border-subtle); }
+  .swatch-name { font-family: var(--mora-font-mono); font-size: 11px; margin-top: 6px; color: var(--mora-color-text-primary); }
+  .swatch-hex { font-family: var(--mora-font-mono); font-size: 10px; color: var(--mora-color-text-secondary); }
+  .toggle { background: var(--mora-color-bg-surface-1); color: var(--mora-color-text-primary); border: 1px solid var(--mora-color-border-subtle); border-radius: var(--mora-radius-control); height: 36px; padding: 0 14px; cursor: pointer; font-size: 13px; display: inline-flex; align-items: center; user-select: none; }
+  .theme-input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+  .toggle input { accent-color: var(--mora-color-brand-accent); width: 14px; height: 14px; margin: 0 var(--mora-space-sm) 0 0; cursor: pointer; }
+  /* Thème clair piloté en CSS pur : case cochée + :has(). Aucune dépendance JS. */
+  html:has(#themeToggle:checked) {
+    --mora-color-bg-base: #F8F9FA;
+    --mora-color-bg-surface-1: #FFFFFF;
+    --mora-color-bg-surface-2: #F1F3F5;
+    --mora-color-text-primary: #0B0C0E;
+    --mora-color-text-secondary: #525866;
+    --mora-color-border-subtle: rgba(11, 12, 14, 0.08);
+  }
+  .note { font-size: 13px; color: var(--mora-color-text-secondary); }
+  .ok { color: #22C55E; }
+  .ko { color: #EF4444; }
+  .lockup { display: block; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="page-head">
+    <div>
+      <div class="eyebrow">MORA · Brand System v2.0 FINAL · Territoire 2 — La Métrique Temporelle</div>
+      <h1>Le texte s'efface.<br />La présence demeure.</h1>
+      <p class="lede">Aperçu de contrôle des artefacts livrés : tokens corrigés, 8 logotypes, 5 états de l'agent vocal, contrastes mesurés.</p>
+    </div>
+    <label class="toggle"><input type="checkbox" id="themeToggle" /> Basculer le thème</label>
+  </div>
+
+  <!-- ============ LOGOMARK ============ -->
+  <section>
+    <h2>Logomark « Mora Gate »</h2>
+    <div class="grid g2">
+      <div class="card dark center">
+        <img src="../frontend/src/assets/logo/mora-gate-master.svg" alt="Mora Gate bicolore" style="width: 120px; height: 120px;" />
+      </div>
+      <div class="card light center">
+        <img src="../frontend/src/assets/logo/mora-gate-monochrome-encre.svg" alt="Mora Gate monochrome encre" style="width: 120px; height: 120px;" />
+      </div>
+    </div>
+    <p class="note" style="margin-top:12px">À gauche : le Master Bicolore sur Encre. À droite : la variante <strong>Monochrome Encre</strong> sur Albâtre — sans elle, le Master est invisible en mode clair (1,00:1).</p>
+    <p class="note" style="margin-top:6px"><strong>Règle d'usage vérifiée :</strong> le Master Bicolore, le Monochrome Blanc et le Micro bicolore sont des assets <strong>fond sombre uniquement</strong> (remplissage #F9F9FB). En mode clair, employer <strong>Monochrome Encre</strong>, ou poser le Master sur une surface Encre (favicon, app icon).</p>
+  </section>
+
+  <!-- ============ DECLINAISONS ============ -->
+  <section>
+    <h2>Déclinaisons livrées</h2>
+    <div class="grid g3">
+      <div class="card dark">
+        <div class="center"><img src="../frontend/src/assets/logo/mora-gate-master.svg" alt="" style="width:48px;height:48px" /></div>
+        <div class="label">Master Bicolore</div>
+        <div class="swatch-hex">24 × 24 u · fond sombre</div>
+      </div>
+      <div class="card dark">
+        <div class="center"><img src="../frontend/src/assets/logo/mora-gate-monochrome-blanc.svg" alt="" style="width:48px;height:48px" /></div>
+        <div class="label">Monochrome Blanc</div>
+        <div class="swatch-hex">24 × 24 u · fond sombre</div>
+      </div>
+      <div class="card light">
+        <div class="center"><img src="../frontend/src/assets/logo/mora-gate-monochrome-encre.svg" alt="" style="width:48px;height:48px" /></div>
+        <div class="label">Monochrome Encre <span class="ok">●</span></div>
+        <div class="swatch-hex">24 × 24 u · nouveau</div>
+      </div>
+      <div class="card dark">
+        <div class="center"><img src="../frontend/src/assets/logo/mora-gate-micro-16.svg" alt="" style="width:32px;height:32px" /></div>
+        <div class="label">Micro <span class="ok">●</span></div>
+        <div class="swatch-hex">16 × 16 u · bicolore restitué · fond sombre</div>
+      </div>
+      <div class="card">
+        <div class="center"><img src="../frontend/src/assets/logo/mora-lockup-horizontal.svg" alt="" style="width:148px" /></div>
+        <div class="label">Lockup Horizontal <span class="ok">●</span></div>
+        <div class="swatch-hex">espacement 1,0X · recadré</div>
+      </div>
+      <div class="card">
+        <div class="center"><img src="../frontend/src/assets/logo/mora-lockup-vertical.svg" alt="" style="width:76px" /></div>
+        <div class="label">Lockup Vertical <span class="ok">●</span></div>
+        <div class="swatch-hex">espacement 0,75X · nouveau</div>
+      </div>
+      <div class="card">
+        <div class="center"><img src="../frontend/src/assets/logo/mora-favicon.svg" alt="" style="width:32px;height:32px;border-radius:6px" /></div>
+        <div class="label">Favicon <span class="ok">●</span></div>
+        <div class="swatch-hex">32 × 32 · nouveau</div>
+      </div>
+      <div class="card">
+        <div class="center"><img src="../frontend/src/assets/logo/mora-app-icon.svg" alt="" style="width:72px;height:72px;border-radius:10px" /></div>
+        <div class="label">App Icon <span class="ok">●</span></div>
+        <div class="swatch-hex">512 × 512 · nouveau</div>
+      </div>
+      <div class="card dark center">
+        <img src="../frontend/src/assets/logo/mora-lockup-horizontal.svg" alt="" style="width:148px" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ETATS DE L'AGENT VOCAL ============ -->
+  <section>
+    <h2>Les 5 états de l'agent vocal</h2>
+    <div class="grid g5">
+      <div class="card">
+        <div class="center">
+          <div class="mora-agent" data-state="idle">
+            <svg class="mora-gate" viewBox="0 0 24 24" width="24" height="24"><path class="mora-gate-body" fill-rule="evenodd" d="M0 0H20V3H16V9.5L10.2 18H6.5L4 14.3V24H0V0ZM4 3V9.7L8.4 16H9.8L16 6.85V3H4Z" fill="#F9F9FB" /><rect class="mora-gate-leg" x="20" y="0" width="4" height="16" fill="#D96B27" /></svg>
+          </div>
+        </div>
+        <div class="label">1 · IDLE</div>
+        <div class="swatch-hex">respiration 40→70 %</div>
+      </div>
+
+      <div class="card">
+        <div class="center">
+          <div class="mora-agent" data-state="listening">
+            <svg class="mora-gate" viewBox="0 0 24 24" width="24" height="24"><path class="mora-gate-body" fill-rule="evenodd" d="M0 0H20V3H16V9.5L10.2 18H6.5L4 14.3V24H0V0ZM4 3V9.7L8.4 16H9.8L16 6.85V3H4Z" fill="#F9F9FB" /><rect class="mora-gate-leg" x="20" y="0" width="4" height="16" fill="#D96B27" /></svg>
+          </div>
+        </div>
+        <div class="label">2 · LISTENING</div>
+        <div class="swatch-hex">rétraction scaleY depuis le haut</div>
+      </div>
+
+      <div class="card">
+        <div class="center">
+          <div class="mora-agent" data-state="generating">
+            <svg class="mora-gate" viewBox="0 0 24 24" width="24" height="24"><path class="mora-gate-body" fill-rule="evenodd" d="M0 0H20V3H16V9.5L10.2 18H6.5L4 14.3V24H0V0ZM4 3V9.7L8.4 16H9.8L16 6.85V3H4Z" fill="#F9F9FB" /><rect class="mora-gate-leg" x="20" y="0" width="4" height="16" fill="#D96B27" /></svg>
+          </div>
+        </div>
+        <div class="label">3 · GENERATING</div>
+        <div class="swatch-hex">balayage ambré</div>
+      </div>
+
+      <div class="card">
+        <div class="center">
+          <div class="mora-agent" data-state="speaking">
+            <svg class="mora-gate" viewBox="0 0 24 24" width="24" height="24"><path class="mora-gate-body" fill-rule="evenodd" d="M0 0H20V3H16V9.5L10.2 18H6.5L4 14.3V24H0V0ZM4 3V9.7L8.4 16H9.8L16 6.85V3H4Z" fill="#F9F9FB" /><rect class="mora-gate-leg" x="20" y="0" width="4" height="16" fill="#D96B27" /></svg>
+            <div class="mora-meter">
+              <span class="mora-meter-block" style="--mora-mora-duration: 180"></span>
+              <span class="mora-meter-block" style="--mora-mora-duration: 240"></span>
+              <span class="mora-meter-block" style="--mora-mora-duration: 120"></span>
+              <span class="mora-meter-block" style="--mora-mora-duration: 300"></span>
+            </div>
+          </div>
+        </div>
+        <div class="label">4 · SPEAKING <span class="ok">●</span></div>
+        <div class="swatch-hex">segments à la durée réelle</div>
+      </div>
+
+      <div class="card">
+        <div class="center">
+          <div class="mora-agent" data-state="error">
+            <svg class="mora-gate" viewBox="0 0 24 24" width="24" height="24"><path class="mora-gate-body" fill-rule="evenodd" d="M0 0H20V3H16V9.5L10.2 18H6.5L4 14.3V24H0V0ZM4 3V9.7L8.4 16H9.8L16 6.85V3H4Z" fill="#F9F9FB" /><rect class="mora-gate-leg" x="20" y="0" width="4" height="16" fill="#D96B27" /></svg>
+          </div>
+        </div>
+        <div class="label">5 · ERROR</div>
+        <div class="swatch-hex">grenat + 3 cycles</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ COMPOSANTS ============ -->
+  <section>
+    <h2>Composants</h2>
+    <div class="grid" style="grid-template-columns: 340px 1fr">
+      <div class="card">
+        <div class="stack">
+          <button class="mora-btn mora-btn-primary">Générer l'audio</button>
+          <button class="mora-btn mora-btn-accent">Parler à l'agent</button>
+          <p class="note">Primaire : Blanc Obsidienne / Encre · Accent : Ambre <strong>#D96B27</strong> / Encre — <span class="ok">5,67:1 AA</span> (et non 3,45:1).</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="mora-meter" style="max-width: 100%">
+          <span class="mora-meter-block" style="--mora-mora-duration: 140"></span>
+          <span class="mora-meter-block" style="--mora-mora-duration: 220"></span>
+          <span class="mora-meter-block" style="--mora-mora-duration: 90"></span>
+          <span class="mora-meter-block" style="--mora-mora-duration: 260"></span>
+          <span class="mora-meter-block" style="--mora-mora-duration: 180"></span>
+          <span class="mora-meter-block" style="--mora-mora-duration: 310"></span>
+          <span class="mora-meter-block" style="--mora-mora-duration: 120"></span>
+          <span class="mora-meter-block" style="--mora-mora-duration: 200"></span>
+        </div>
+        <p class="note" style="margin-top:12px">Mora Meter — largeur ∝ durée de la mora (1 px = 1,5 ms). 8 moras ci-dessus ≈ 1,52 s = 1 013 px.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PALETTE ============ -->
+  <section>
+    <h2>Palette — contrastes mesurés</h2>
+    <div class="grid g4" style="grid-template-columns: repeat(4, 1fr)">
+      <div><div class="swatch" style="background:#0B0C0E"></div><div class="swatch-name">Encre</div><div class="swatch-hex">#0B0C0E · base sombre</div></div>
+      <div><div class="swatch" style="background:#131518"></div><div class="swatch-name">Basalte</div><div class="swatch-hex">#131518 · niveau 1</div></div>
+      <div><div class="swatch" style="background:#1C1F24"></div><div class="swatch-name">Ardoise</div><div class="swatch-hex">#1C1F24 · niveau 2</div></div>
+      <div><div class="swatch" style="background:#D96B27"></div><div class="swatch-name">Ambre Souffle</div><div class="swatch-hex">#D96B27 · accent · 5,67:1</div></div>
+      <div><div class="swatch" style="background:#F8F9FA"></div><div class="swatch-name">Albâtre</div><div class="swatch-hex">#F8F9FA · base claire</div></div>
+      <div><div class="swatch" style="background:#F9F9FB"></div><div class="swatch-name">Blanc Obsidienne</div><div class="swatch-hex">#F9F9FB · 18,61:1</div></div>
+      <div><div class="swatch" style="background:#8A909A"></div><div class="swatch-name">Brume</div><div class="swatch-hex">#8A909A · 6,09:1</div></div>
+      <div><div class="swatch" style="background:#EF4444"></div><div class="swatch-name">Grenat</div><div class="swatch-hex">#EF4444 · erreur · 5,20:1</div></div>
+    </div>
+    <p class="note" style="margin-top:16px">Teintes hors PDF v2.0, isolées dans <code>tokens.css</code> § 7 en attente d'une v2.1 : Jade #22C55E (8,59:1) · Topaze #EAB308 (10,20:1) · Cobalt #3B82F6 (5,32:1).</p>
+  </section>
+
+</div>
+</body>
+</html>
