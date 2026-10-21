@@ -1,6 +1,7 @@
 from contextlib import asynccontextmanager
 from io import BytesIO
 import logging
+import os
 
 import numpy as np
 import soundfile as sf
@@ -13,20 +14,33 @@ from kokoro import KPipeline
 logger = logging.getLogger(__name__)
 pipeline = None
 SUPPORTED_VOICES = {"ff_siwis"}
+DEFAULT_ALLOWED_ORIGINS = "http://localhost:5173,http://127.0.0.1:5173"
+
+
+def get_allowed_origins():
+    configured_origins = os.getenv("ALLOWED_ORIGINS", DEFAULT_ALLOWED_ORIGINS)
+    return [origin.strip() for origin in configured_origins.split(",") if origin.strip()]
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     global pipeline
-    pipeline = KPipeline(lang_code="f", repo_id="hexgrad/Kokoro-82M")
-    yield
-    pipeline = None
+    try:
+        logger.info("Chargement du modèle Kokoro (hexgrad/Kokoro-82M)...")
+        pipeline = KPipeline(lang_code="f", repo_id="hexgrad/Kokoro-82M")
+        logger.info("Modèle Kokoro chargé.")
+        yield
+    except Exception:
+        logger.exception("Échec du chargement du modèle Kokoro.")
+        raise
+    finally:
+        pipeline = None
 
 
 app = FastAPI(lifespan=lifespan)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
+    allow_origins=get_allowed_origins(),
     allow_methods=["GET", "POST"],
     allow_headers=["Content-Type"],
 )
