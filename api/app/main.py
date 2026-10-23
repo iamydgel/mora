@@ -51,6 +51,32 @@ class TTSRequest(BaseModel):
     voice: str = "ff_siwis"
 
 
+def synthesize_audio(text: str, voice: str = "ff_siwis") -> np.ndarray:
+    text = text.strip()
+    if not text:
+        raise HTTPException(status_code=400, detail="Le texte ne peut pas être vide.")
+    if len(text) > 1000:
+        raise HTTPException(status_code=400, detail="Le texte ne peut pas dépasser 1000 caractères.")
+    if voice not in SUPPORTED_VOICES:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Voix inconnue : {voice}. Voix disponible : ff_siwis.",
+        )
+
+    try:
+        audio_chunks = [
+            audio
+            for _, _, audio in pipeline(text, voice=voice)
+            if audio is not None and len(audio) > 0
+        ]
+        if not audio_chunks:
+            raise RuntimeError("Kokoro n'a produit aucun audio.")
+        return np.concatenate(audio_chunks)
+    except Exception as error:
+        logger.exception("La génération audio a échoué : %s", error)
+        raise HTTPException(status_code=500, detail="La génération audio a échoué.") from error
+
+
 @app.get("/health")
 def health():
     return {"status": "ok"}
@@ -58,27 +84,8 @@ def health():
 
 @app.post("/tts")
 def text_to_speech(request: TTSRequest):
-    text = request.text.strip()
-    if not text:
-        raise HTTPException(status_code=400, detail="Le texte ne peut pas être vide.")
-    if len(text) > 1000:
-        raise HTTPException(status_code=400, detail="Le texte ne peut pas dépasser 1000 caractères.")
-    if request.voice not in SUPPORTED_VOICES:
-        raise HTTPException(
-            status_code=400,
-            detail=f"Voix inconnue : {request.voice}. Voix disponible : ff_siwis.",
-        )
-
+    audio = synthesize_audio(request.text, request.voice)
     try:
-        audio_chunks = [
-            audio
-            for _, _, audio in pipeline(text, voice=request.voice)
-            if audio is not None and len(audio) > 0
-        ]
-        if not audio_chunks:
-            raise RuntimeError("Kokoro n'a produit aucun audio.")
-
-        audio = np.concatenate(audio_chunks)
         wav_buffer = BytesIO()
         sf.write(wav_buffer, audio, 24000, format="WAV")
         return Response(
