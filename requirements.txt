@@ -3,3 +3,4 @@ soundfile
 fastapi
 uvicorn[standard]
 pydantic
+spaces

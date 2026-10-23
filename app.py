@@ -1,9 +1,11 @@
 import gradio as gr
+import spaces
 from fastapi import HTTPException
 
 from api.app import main as mora_api
 
 
+@spaces.GPU
 def generate_speech(text: str, voice: str):
     try:
         audio = mora_api.synthesize_audio(text, voice)
