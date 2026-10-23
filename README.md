@@ -2,12 +2,12 @@
 
 [**English**](README.md) · [Français](README.fr.md)
 
-# MORA
+<h1><img src="frontend/src/assets/logo/mora-gate-monochrome-encre.svg" alt="" width="32" /> MORA</h1>
 
 ### Text to speech, in your browser.
 
 Paste text. Generate a natural voice. Listen instantly. Download as WAV.<br/>
-An open-source, full-stack AI application: React front end, FastAPI inference API, and the Kokoro TTS model. This is a local MVP; it has not yet been deployed.
+An open-source, full-stack AI application: React front end, FastAPI inference API, and the Kokoro TTS model. The front end is deployed on Vercel and the API on a Hugging Face Space.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
 [![Status: MVP](https://img.shields.io/badge/Status-MVP-success?style=flat-square)](#roadmap)
@@ -16,7 +16,7 @@ An open-source, full-stack AI application: React front end, FastAPI inference AP
 [![FastAPI](https://img.shields.io/badge/API-FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
 [![Kokoro TTS](https://img.shields.io/badge/Model-Kokoro-FF6F61?style=flat-square)](https://huggingface.co/hexgrad/Kokoro-82M)
 
-**Local MVP — not yet deployed** · [**Quick Start**](#quick-start) · [**API Reference**](#api-reference) · [**Roadmap**](#roadmap) · [**Contributing**](#contributing)
+**Deployed** · [https://mora-chi.vercel.app/](https://mora-chi.vercel.app/) · [Hugging Face API Space](https://huggingface.co/spaces/iamSAVITAR/mora) · [**Quick Start**](#quick-start) · [**API Reference**](#api-reference) · [**Roadmap**](#roadmap) · [**Contributing**](#contributing)
 
 <br/>
 
@@ -27,7 +27,7 @@ An open-source, full-stack AI application: React front end, FastAPI inference AP
 <br/>
 
 > [!NOTE]
-> MORA currently runs locally and has not yet been deployed.
+> The front end is deployed on Vercel and the API is deployed on a Hugging Face Space.
 
 ---
 
@@ -70,7 +70,7 @@ It is deliberately small, finished, and honest about its limits. It is not an El
 | **No account** | Open the page and generate. No sign-up, no API key. |
 | **No training** | Uses an evaluated open-source checkpoint instead of training from scratch. |
 | **No lock-in** | Front end and API are decoupled. Point the front end to another API through `VITE_API_URL`. |
-| **No cost** | The MVP currently runs locally; no hosting is configured. |
+| **No cost** | The project is deployed on Vercel and Hugging Face Spaces. |
 
 ---
 
@@ -141,11 +141,11 @@ Open the URL printed by Vite (default `http://localhost:5173`), type some text, 
 flowchart LR
     U([User<br/>Browser]) --> F
 
-    subgraph Local ["Local MVP · not deployed"]
+    subgraph Frontend ["Front end · Vercel"]
         F["React + Vite<br/>Input · Loader · Player · Download"]
     end
 
-    subgraph API ["FastAPI · local"]
+    subgraph API ["FastAPI · Hugging Face Space"]
         A["FastAPI<br/>Validation · CORS · Response"]
         M["Kokoro<br/>Text → Speech"]
         A --> M
@@ -157,9 +157,9 @@ flowchart LR
 
 | Layer | Responsibility | Runs on |
 |---|---|---|
-| **Front end** | UX, HTTP calls, playback, download | Local development server |
-| **API** | Validation, inference orchestration, response format, CORS | Local Uvicorn server |
-| **Model** | Text → speech | Loaded by the local API |
+| **Front end** | UX, HTTP calls, playback, download | Vercel (and local development server) |
+| **API** | Validation, inference orchestration, response format, CORS | Hugging Face Space (and local Uvicorn server) |
+| **Model** | Text → speech | Loaded by the API |
 | **Auth / billing / object storage** | Out of scope for the MVP | n/a |
 
 The front end and the API share a **single contract**: `POST /tts`. Point the front end to another API by changing `VITE_API_URL`, not by rewriting the product.
@@ -216,7 +216,7 @@ npm run dev
 
 ### API with Docker
 
-Docker is not configured in this MVP; `api/Dockerfile` is not present.
+`api/Dockerfile` is present, but the Hugging Face Space currently uses the Gradio SDK rather than Docker.
 
 ---
 
@@ -236,11 +236,11 @@ The front end reaches the API through `VITE_API_URL` only. No URL is hard-coded.
 
 | Variable | Required | Default | Description |
 |---|---|---|---|
-| — | No | — | The API does not read `api/.env`; its checkpoint, voice, text limit, and CORS origins are set in code |
+| `ALLOWED_ORIGINS` | No | `http://localhost:5173,http://127.0.0.1:5173` | Comma-separated CORS origins, read from the process environment; the API does not load `api/.env` |
 
 ### Advanced configuration
 
-- **API values.** The checkpoint, French language code, supported voice, text limit, and CORS origins are currently set in `api/app/main.py`.
+- **API values.** The checkpoint, French language code, supported voice, and text limit are set in `api/app/main.py`; CORS origins can be overridden with `ALLOWED_ORIGINS`.
 - **Client timeout.** The front-end request timeout is 120 seconds to allow time for inference.
 - **Build-time variables.** Vite reads `VITE_*` values at startup/build time. Restart Vite after changing `VITE_API_URL`.
 - **Backend swap.** Any server that implements the [`POST /tts`](#api-reference) contract can replace the local API with no front-end changes.
@@ -317,7 +317,7 @@ Content-Type: application/json
 | `200 OK` | `audio/wav` | 24 kHz WAV binary body with `Content-Disposition: attachment; filename="mora.wav"` |
 | `400 Bad Request` | `application/json` | Empty text, text over the length limit, or unknown voice |
 | `422 Unprocessable Entity` | `application/json` | Missing or invalid request fields |
-| `500 Internal Server Error` | `application/json` | Inference failure |
+| `500 Internal Server Error` | `application/json` | Inference or WAV encoding failure |
 
 Error bodies follow FastAPI's standard `{ "detail": "..." }` envelope.
 
@@ -344,7 +344,7 @@ mora/
 │   ├── requirements.txt
 │   └── .venv/                 # Local virtual environment, ignored by Git
 └── docs/
-    ├── screenshot.png
+    ├── scs1.png
     ├── demo.gif
     └── architecture.png
 ```
@@ -355,18 +355,18 @@ A single repository keeps cloning, reviewing, and portfolio linking friction-fre
 
 ## Deployment
 
-MORA is currently a local MVP and has not yet been deployed.
+The front end is deployed on [Vercel](https://mora-chi.vercel.app), and the API is deployed on the [Hugging Face Space](https://huggingface.co/spaces/iamSAVITAR/mora).
 
-### 1. API: Hugging Face Space (Docker)
+### 1. API: Hugging Face Space (Gradio SDK)
 
-The API is not deployed. There is no `api/Dockerfile` or public API endpoint yet.
+The Space uses the Gradio SDK on ZeroGPU hardware. Its Gradio interface is mounted on the FastAPI application, which exposes the documented `/health` and `/tts` endpoints.
 
 ### 2. Front end: Vercel
 
-The front end is not deployed; there is no public front-end URL yet.
+The front end is deployed at [mora-chi.vercel.app](https://mora-chi.vercel.app).
 
 > [!WARNING]
-> Screenshot, demo, and architecture image paths are placeholders; those files are not present yet.
+> The architecture image path in the project structure is a placeholder; `docs/architecture.png` is not present.
 
 ---
 
@@ -378,7 +378,7 @@ The front end is not deployed; there is no public front-end URL yet.
 | **Voice allow-list** | Only a closed list of voices is accepted; unknown values return `400` |
 | **CORS** | Explicit allow-list: `http://localhost:5173` and `http://127.0.0.1:5173` |
 | **Stateless API** | No accounts, no database, no object storage: nothing to leak |
-| **Secrets** | No API keys are required. The front-end API URL uses `VITE_API_URL`; the API has no environment-variable configuration |
+| **Secrets** | No API keys are required. The front-end API URL uses `VITE_API_URL`; the API reads `ALLOWED_ORIGINS` from the process environment |
 | **Abuse resistance** | Length caps bound per-request cost. Quotas and rate limiting are planned alongside authentication |
 
 ---
@@ -394,7 +394,7 @@ MORA runs inference on **CPU** by design.
 | **Payload size** | WAV is uncompressed, so files are larger than MP3 or Opus equivalents |
 | **Mitigations** | Server-side length cap, generous client timeout, explicit loading state |
 
-The MVP currently runs locally and has no hosted inference service.
+The API is also deployed on a Hugging Face Space using the Gradio SDK and ZeroGPU hardware.
 
 ---
 
@@ -453,7 +453,6 @@ These are intentional boundaries, not omissions. They remain evolution paths. Th
 ### Known limitations
 
 - CPU inference is slower than GPU, especially on long text.
-- The MVP has not yet been deployed.
 - Voice quality is that of Kokoro, not of a commercial service.
 - The API currently supports only the French voice `ff_siwis` on `hexgrad/Kokoro-82M`.
 - No cloud history and no user accounts.
@@ -468,9 +467,9 @@ These are intentional boundaries, not omissions. They remain evolution paths. Th
 - [x] Product scoping, architecture, $0 stack
 - [x] Kokoro + FastAPI running locally
 - [x] Minimal React front end (input, loader, player, download)
-- [ ] GitHub monorepo and documentation
-- [ ] Hugging Face Space (Docker) and Vercel deployment
-- [ ] Screenshots, demo GIF, live links
+- [x] GitHub monorepo and documentation
+- [x] Hugging Face Space (Gradio SDK on ZeroGPU) and Vercel deployment
+- [x] Screenshots, demo GIF, live links
 
 **Next** *(still $0 where possible)*
 
@@ -527,7 +526,7 @@ Contributions of every size are welcome: bug reports, voice quality feedback, UI
 
 <br/>
 
-MORA currently runs locally. The API loads the Kokoro pipeline when it starts; no Hugging Face Space is configured.
+The API loads the Kokoro pipeline when it starts. The deployed API runs on the [Hugging Face Space](https://huggingface.co/spaces/iamSAVITAR/mora).
 
 </details>
 
@@ -554,7 +553,7 @@ Yes. The front end only depends on the `POST /tts` contract. Replace the model i
 
 <br/>
 
-The front end can point to another API that implements `POST /tts` by changing `VITE_API_URL`. Deployment instructions are not configured in this repository.
+The front end can point to another API that implements `POST /tts` by changing `VITE_API_URL`. The current API is hosted on the [Hugging Face Space](https://huggingface.co/spaces/iamSAVITAR/mora).
 
 </details>
 
